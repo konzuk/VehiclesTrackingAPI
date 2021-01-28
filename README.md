@@ -2,7 +2,7 @@
 
 **REST API design with ASP.NET Core using .net 5**
 
-## Run the project
+### Run the project
 
 1. Build the solution using Visual Studio, or on the [command line](https://www.microsoft.com/net/core) with `dotnet build`.
 2. Run the project in Visual Studio or `dotnet run`. The API will start up on http://localhost:50647
