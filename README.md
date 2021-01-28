@@ -2,8 +2,6 @@
 
 **REST API design with ASP.NET Core using .net 5**
 
-[TOC]
-
 ## Run the project
 
 1. Build the solution using Visual Studio, or on the [command line](https://www.microsoft.com/net/core) with `dotnet build`.
