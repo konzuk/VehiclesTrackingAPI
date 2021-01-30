@@ -13,6 +13,9 @@
 ### Database
 - Entity Framework Core in-memory (No need additional Set Up)
 - Can change to Entity Framework Core SQLServer for production `Microsoft.EntityFrameworkCore.SqlServer`
+	- Update connection string in `appsettings.json`
+	- `add-migration InitDatabase` Create class for migration to database
+	- `update-database`Apply change to database.
 - Can also change to Entity Framework Core Cosmos DB for production `Microsoft.EntityFrameworkCore.Cosmos`
 
 
@@ -20,5 +23,22 @@
 - **AutoMapper**: For auto map model and entity. Easy for scale the project in a fast pace.
 	- `AutoMapper`
 	- `AutoMapper.Extensions.Microsoft.DependencyInjection`
+- **EntityFrameworkCore**: For working with Database
+	- `Microsoft.EntityFrameworkCore.InMemory`
+	- `Microsoft.EntityFrameworkCore.SqlServer`
+	- `Microsoft.EntityFrameworkCore.Tools`
+- **OpenIddict**: For Authentication and Authorization
+	- `Microsoft.AspNetCore.Identity.EntityFrameworkCore`
+	- `OpenIddict.AspNetCore`
+	- `OpenIddict.Server`
+	- `OpenIddict.EntityFrameworkCore`
+- **NetTopologySuite**: For working with geometry
+	- `NetTopologySuite`
+	- `Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite`
 - **NSwag**: Auto generate API document and API definitions
 	- `NSwag.AspNetCore`
+- **JSON**: JSON Requirement
+	- `Newtonsoft.Json`
+	- `Microsoft.AspNetCore.Mvc.NewtonsoftJson`
+- **Versioning**: For API Versioning in Header
+	- `Microsoft.AspNetCore.Mvc.Versioning`
