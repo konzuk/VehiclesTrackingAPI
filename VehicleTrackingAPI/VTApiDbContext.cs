@@ -11,7 +11,8 @@ namespace VehicleTrackingAPI
     public class VTApiDbContext : IdentityDbContext<UserEntity, UserRoleEntity, Guid>
     {
         public VTApiDbContext(DbContextOptions options)
-            : base(options) { }
+            : base(options) {
+        }
 
         public DbSet<VehicleEntity> Vehicles { get; set; }
         public DbSet<PositionEntity> Positions { get; set; }

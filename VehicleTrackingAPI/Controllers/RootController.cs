@@ -23,7 +23,7 @@ namespace VehicleTrackingAPI.Controllers
             var response = new RootResponse
             {
                 Self = Link.To(nameof(GetRoot)),
-                Users = Link.ToCollection(nameof(UsersController.GetVisibleUsers)),
+                Users = Link.To(nameof(UsersController.GetVisibleUsers)),
                 UserInfo = Link.To(nameof(UserinfoController.Userinfo)),
                 Vehicles = Link.To(nameof(VehiclesController.GetVisibleVehicles)),
                 Token = FormMetadata.FromModel(

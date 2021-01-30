@@ -96,6 +96,7 @@ namespace VehicleTrackingAPI.Services
 
             var size = await query.CountAsync();
 
+
             var items = await query
                 .Skip(pagingOptions.Offset.Value)
                 .Take(pagingOptions.Limit.Value)

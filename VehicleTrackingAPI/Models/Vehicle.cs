@@ -8,22 +8,18 @@ namespace VehicleTrackingAPI.Models
 {
     public class Vehicle : Resource
     {
-
         public Link User { get; set; }
 
 
+        public Link CurrentPositions { get; set; }
+        public Link Postions { get; set; }
 
-       
+
+        public Form RegisterPosition { get; set; }
 
         [Sortable]
         [SearchableString]
         public string Name { get; set; }
-
-
-
-        [Sortable]
-        [SearchableString]
-        public string UserName { get; set; }
 
         public string Description { get; set; }
 
@@ -35,6 +31,10 @@ namespace VehicleTrackingAPI.Models
         [Sortable]
         [SearchableDateTime]
         public DateTimeOffset ModifiedAt { get; set; }
+
+        public string UserName { get; set; }
+
+
 
     }
 }

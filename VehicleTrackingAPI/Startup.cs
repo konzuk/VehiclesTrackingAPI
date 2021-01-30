@@ -42,6 +42,7 @@ namespace VehicleTrackingAPI
 
             services.AddScoped<IUserService, DefaultUserService>();
             services.AddScoped<IVehicleService, DefaultVehicleService>();
+            services.AddScoped<IPositionService, DefaultPositionService>();
 
 
             services.AddDbContext<VTApiDbContext>(
@@ -63,6 +64,7 @@ namespace VehicleTrackingAPI
 
 
                     options.UseOpenIddict<Guid>();
+
                 });
 
             // Call private functions to Config Identity Service.
@@ -194,6 +196,12 @@ namespace VehicleTrackingAPI
                     p => p.RequireAuthenticatedUser().RequireRole("Admin"));
 
                 options.AddPolicy("ViewAllVehiclesPolicy",
+                    p => p.RequireAuthenticatedUser().RequireRole("Admin"));
+
+                options.AddPolicy("ViewAllVehiclesPositionsPolicy",
+                    p => p.RequireAuthenticatedUser().RequireRole("Admin"));
+
+                options.AddPolicy("ViewAllVehiclesPositionPolicy",
                     p => p.RequireAuthenticatedUser().RequireRole("Admin"));
 
             }); 

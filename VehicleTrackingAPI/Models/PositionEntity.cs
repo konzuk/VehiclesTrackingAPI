@@ -16,6 +16,9 @@ namespace VehicleTrackingAPI.Models
 
         public Point Location { get; set; }
 
+        public Guid VehicleId { get; set; }
+        public VehicleEntity Vehicle { get; set; }
+
 
     }
 }

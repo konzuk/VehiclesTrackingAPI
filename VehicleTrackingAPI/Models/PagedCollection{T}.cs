@@ -71,7 +71,7 @@ namespace VehicleTrackingAPI.Models
                 ["offset"] = nextPage
             };
 
-            var newLink = Link.ToCollection(self.RouteName, parameters);
+            var newLink = Link.To(self.RouteName, parameters);
             return newLink;
         }
 
@@ -90,7 +90,7 @@ namespace VehicleTrackingAPI.Models
                 ["limit"] = limit,
                 ["offset"] = offset
             };
-            var newLink = Link.ToCollection(self.RouteName, parameters);
+            var newLink = Link.To(self.RouteName, parameters);
 
             return newLink;
         }
@@ -125,7 +125,7 @@ namespace VehicleTrackingAPI.Models
                 ["limit"] = limit,
                 ["offset"] = previousPage
             };
-            var newLink = Link.ToCollection(self.RouteName, parameters);
+            var newLink = Link.To(self.RouteName, parameters);
 
             return newLink;
         }

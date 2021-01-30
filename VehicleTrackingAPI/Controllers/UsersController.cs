@@ -16,15 +16,21 @@ namespace VehicleTrackingAPI.Controllers
     public class UsersController : ControllerBase
     {
         private readonly IUserService _userService;
+        private readonly IVehicleService _vehicleService;
         private readonly PagingOptions _defaultPagingOptions;
         private readonly IAuthorizationService _authzService;
 
+
+
+
         public UsersController(
-            IUserService userService,
+            IUserService userService, 
+            IVehicleService vehicleService,
             IOptions<PagingOptions> defaultPagingOptions,
             IAuthorizationService authorizationService)
         {
             _userService = userService;
+            _vehicleService = vehicleService;
             _defaultPagingOptions = defaultPagingOptions.Value;
             _authzService = authorizationService;
         }
@@ -64,7 +70,7 @@ namespace VehicleTrackingAPI.Controllers
             }
 
             var collection = PagedCollection<User>.Create<UsersResponse>(
-                Link.ToCollection(nameof(GetVisibleUsers)),
+                Link.To(nameof(GetVisibleUsers)),
                 users.Items.ToArray(),
                 users.TotalSize,
                 pagingOptions);
@@ -127,6 +133,56 @@ namespace VehicleTrackingAPI.Controllers
                 Message = "Registration failed.",
                 Detail = message
             });
+        }
+
+
+
+
+
+
+
+        // GET /vehicles/{userId}/listVehicles
+        [Authorize]
+        [HttpGet("{userId}/listVehicles", Name = nameof(GetVehiclesForUser))]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(200)]
+        public async Task<PagedCollection<Vehicle>> GetVehiclesForUser(
+            Guid userId,
+            [FromQuery] PagingOptions pagingOptions,
+            [FromQuery] SortOptions<Vehicle, VehicleEntity> sortOptions,
+            [FromQuery] SearchOptions<Vehicle, VehicleEntity> searchOptions)
+        {
+            pagingOptions.Offset = pagingOptions.Offset ?? _defaultPagingOptions.Offset;
+            pagingOptions.Limit = pagingOptions.Limit ?? _defaultPagingOptions.Limit;
+
+            var Vehicles = new PagedResults<Vehicle>();
+
+            if (User.Identity.IsAuthenticated)
+            {
+                var userCanSeeAllVehicles = await _authzService.AuthorizeAsync(
+                    User, "ViewAllVehiclesPolicy");
+                var userCanSeeAllUser = await _authzService.AuthorizeAsync(
+                    User, "ViewAllUsersPolicy");
+                if (userCanSeeAllVehicles.Succeeded && userCanSeeAllUser.Succeeded)
+                {
+                    var user = await _userService.GetUserByIdAsync(userId);
+                    if (user != null)
+                    {
+                        Vehicles = await _vehicleService.GetVehiclesForUserIdAsync(
+                            userId, pagingOptions, sortOptions, searchOptions);
+                    }
+                }
+              
+            }
+
+            var collectionLink = Link.To(nameof(GetVehiclesForUser));
+            var collection = PagedCollection<Vehicle>.Create<PagedCollection<Vehicle>>(
+                collectionLink,
+                Vehicles.Items.ToArray(),
+                Vehicles.TotalSize,
+                pagingOptions);
+
+            return collection;
         }
     }
 }
