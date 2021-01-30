@@ -56,12 +56,3 @@ This Framework also have **HATEOAS!!!**. Journey start with http://localhost:443
 
 
 
-And this will produce a flow chart:
-
-```mermaid
-graph LR
-A[Square Rect] -- Link text --> B((Circle))
-A --> C(Round Rect)
-B --> D{Rhombus}
-C --> D
-```
