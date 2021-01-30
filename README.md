@@ -1,3 +1,4 @@
+
 # VehiclesTrackingAPI 
 
 **REST API design with ASP.NET Core using .net 5**
@@ -5,10 +6,10 @@
 ### Run the project
 
 1. Build the solution using Visual Studio, or on the [command line](https://www.microsoft.com/net/core) with `dotnet build`.
-2. Run the project in Visual Studio or `dotnet run`. The API will start up on http://localhost:50647
-3. Use an HTTP client like [Postman](https://www.getpostman.com/) or [Fiddler](https://www.telerik.com/download/fiddler) to `GET http://localhost:50647`.
-4. Swagger support http://localhost:50647/swagger
-5. HATEOAS
+2. Run the project in Visual Studio or `dotnet run`. The API will start up on `http://localhost:44345`
+3. Use an HTTP client like [Postman](https://www.getpostman.com/) or [Fiddler](https://www.telerik.com/download/fiddler) to `GET http://localhost:44345`.
+4. Swagger support http://localhost:44345/swagger
+5. **HATEOAS!!!**
 
 ### Database
 - Entity Framework Core in-memory (No need additional Set Up)
@@ -42,3 +43,25 @@
 	- `Microsoft.AspNetCore.Mvc.NewtonsoftJson`
 - **Versioning**: For API Versioning in Header
 	- `Microsoft.AspNetCore.Mvc.Versioning`
+
+### API Document
+
+For API Document please see in **Swagger** (http://localhost:44345/swagger)
+This Framework also have **HATEOAS!!!**. Journey start with http://localhost:44345
+
+
+### Authorization 
+- Resource Owner Password Credentials flow
+- Token: **Bearer**
+
+
+
+And this will produce a flow chart:
+
+```mermaid
+graph LR
+A[Square Rect] -- Link text --> B((Circle))
+A --> C(Round Rect)
+B --> D{Rhombus}
+C --> D
+```
