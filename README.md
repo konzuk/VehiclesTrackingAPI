@@ -46,13 +46,18 @@
 
 ### API Document
 
-For API Document please see in **Swagger** (http://localhost:44345/swagger)
-This Framework also have **HATEOAS!!!**. Journey start with http://localhost:44345
-
+- For API Document please see in **Swagger** (http://localhost:44345/swagger)
+- This Framework also have **HATEOAS!!!**. Journey start with http://localhost:44345
+- Paging Syntax: `...?limit=25&offset=25`
+	- Default paging is config in code
+- Sort Syntax: `...?orderBy=email` or `orderBy=email desc`
+	- Default sort is config in code
+	- Sortable value please check in HATEOAS!!!
+- Search Syntax: 
+	- Single Search: `?search=email sw value,` 
+	- Multiple or Search between : `?search=createdAt gt 2020-07-15&search=createdAt lt 2021-07-16`
+	- Searchable value and pattern please check in HATEOAS!!!
 
 ### Authorization 
 - Resource Owner Password Credentials flow
 - Token: **Bearer**
-
-
-
