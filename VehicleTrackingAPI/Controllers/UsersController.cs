@@ -16,15 +16,21 @@ namespace VehicleTrackingAPI.Controllers
     public class UsersController : ControllerBase
     {
         private readonly IUserService _userService;
+        private readonly IVehicleService _vehicleService;
         private readonly PagingOptions _defaultPagingOptions;
         private readonly IAuthorizationService _authzService;
 
+
+
+
         public UsersController(
             IUserService userService,
+            IVehicleService vehicleService,
             IOptions<PagingOptions> defaultPagingOptions,
             IAuthorizationService authorizationService)
         {
             _userService = userService;
+            _vehicleService = vehicleService;
             _defaultPagingOptions = defaultPagingOptions.Value;
             _authzService = authorizationService;
         }
@@ -64,7 +70,7 @@ namespace VehicleTrackingAPI.Controllers
             }
 
             var collection = PagedCollection<User>.Create<UsersResponse>(
-                Link.ToCollection(nameof(GetVisibleUsers)),
+                Link.To(nameof(GetVisibleUsers)),
                 users.Items.ToArray(),
                 users.TotalSize,
                 pagingOptions);
@@ -73,9 +79,8 @@ namespace VehicleTrackingAPI.Controllers
                 Link.ToForm(
                     nameof(GetVisibleUsers),
                     null,
-                    Link.GetMethod,null,
+                    Link.GetMethod, null,
                     Form.QueryRelation));
-
 
             collection.Me = Link.To(nameof(UserinfoController.Userinfo));
             collection.Register = FormMetadata.FromModel(
@@ -127,6 +132,58 @@ namespace VehicleTrackingAPI.Controllers
                 Message = "Registration failed.",
                 Detail = message
             });
+        }
+
+
+
+
+
+
+
+        // GET /vehicles/{userId}/listVehicles
+        [Authorize]
+        [HttpGet("{userId}/listVehicles", Name = nameof(GetVehiclesForUser))]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(200)]
+        public async Task<IActionResult> GetVehiclesForUser(
+            Guid userId,
+            [FromQuery] PagingOptions pagingOptions,
+            [FromQuery] SortOptions<Vehicle, VehicleEntity> sortOptions,
+            [FromQuery] SearchOptions<Vehicle, VehicleEntity> searchOptions)
+        {
+            pagingOptions.Offset = pagingOptions.Offset ?? _defaultPagingOptions.Offset;
+            pagingOptions.Limit = pagingOptions.Limit ?? _defaultPagingOptions.Limit;
+
+            var user = await _userService.GetUserByIdAsync(userId);
+            if (user == null) return NotFound();
+
+            var userCanSeeAllVehicles = await _authzService.AuthorizeAsync(
+                   User, "ViewAllVehiclesPolicy");
+            if (!userCanSeeAllVehicles.Succeeded) return Unauthorized();
+
+
+            var userCanSeeAllUser = await _authzService.AuthorizeAsync(
+                   User, "ViewAllVehiclesPolicy");
+            if (!userCanSeeAllUser.Succeeded) return Unauthorized();
+
+            if (!User.Identity.IsAuthenticated) return Unauthorized();
+
+            var Vehicles = new PagedResults<Vehicle>();
+
+            Vehicles = await _vehicleService.GetVehiclesForUserIdAsync(
+                userId, pagingOptions, sortOptions, searchOptions);
+
+            if (Vehicles == null) return NotFound();
+
+            var collectionLink = Link.To(nameof(GetVehiclesForUser));
+            var collection = PagedCollection<Vehicle>.Create<PagedCollection<Vehicle>>(
+                collectionLink,
+                Vehicles.Items.ToArray(),
+                Vehicles.TotalSize,
+                pagingOptions);
+
+            return Ok(collection);
         }
     }
 }

@@ -6,10 +6,10 @@ using VehicleTrackingAPI.Models;
 
 namespace VehicleTrackingAPI.Models
 {
-    public class VehiclesResponse : PagedCollection<Vehicle>
+    public class PositionsResponse : PagedCollection<Position>
     {
-        public Form VehicleQuery { get; set; }
-        public Form CreateVehicle { get; set; }
+
+        public Form PositionQuery { get; set; }
 
     }
 }

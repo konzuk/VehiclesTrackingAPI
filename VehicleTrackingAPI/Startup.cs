@@ -36,12 +36,16 @@ namespace VehicleTrackingAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+            services.Configure<AppOptions>(Configuration);
             services.Configure<PagingOptions>(
                    Configuration.GetSection("DefaultPagingOptions"));
 
 
             services.AddScoped<IUserService, DefaultUserService>();
             services.AddScoped<IVehicleService, DefaultVehicleService>();
+            services.AddScoped<IPositionService, DefaultPositionService>();
+            services.AddScoped<IPlaceService, DefaultPlaceService>();
 
 
             services.AddDbContext<VTApiDbContext>(
@@ -50,19 +54,16 @@ namespace VehicleTrackingAPI
 
                     // Use in-memory database for quick dev and testing
                     // TODO: Swap out for a real database in production
+
                     //options.UseInMemoryDatabase("7peakdb");
 
                     ////Change to SQLServer Code
-                    options.UseSqlServer(Configuration.GetConnectionString("7peakdbContext"), op => op.UseNetTopologySuite());
-
-
-                    ////Change to Cosmos DB Code
-                    //options.UseCosmos("https://localhost:8081",
-                    //"C2y6yDjf5/R+ob0N8A7Cgv30VRDJIWEHLM+4QDU5DE2nQ9nDuVTqobD4b8mGGyPMbIZnqyMsEcaGQy67XIw/Jw==",
-                    //databaseName: "OrdersDB");
+                    options.UseSqlServer(Configuration.GetConnectionString("7peakdbContext"), 
+                        op => op.UseNetTopologySuite());
 
 
                     options.UseOpenIddict<Guid>();
+
                 });
 
             // Call private functions to Config Identity Service.
@@ -194,6 +195,15 @@ namespace VehicleTrackingAPI
                     p => p.RequireAuthenticatedUser().RequireRole("Admin"));
 
                 options.AddPolicy("ViewAllVehiclesPolicy",
+                    p => p.RequireAuthenticatedUser().RequireRole("Admin"));
+
+                options.AddPolicy("ViewAllVehiclesPositionsPolicy",
+                    p => p.RequireAuthenticatedUser().RequireRole("Admin"));
+
+                options.AddPolicy("ViewAllPositionsPlacesPolicy",
+                    p => p.RequireAuthenticatedUser().RequireRole("Admin"));
+
+                options.AddPolicy("ViewAllVehiclesPositionPolicy",
                     p => p.RequireAuthenticatedUser().RequireRole("Admin"));
 
             }); 

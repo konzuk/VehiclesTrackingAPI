@@ -12,7 +12,6 @@ namespace VehicleTrackingAPI.Services
 
         Task<Guid> CreateVehicleAsync(Guid userId, VehicleRegisterForm vehicleRegisterForm);
 
-        //Task DeleteVehicleAsync(Guid VehicleId);
 
         Task<PagedResults<Vehicle>> GetVehiclesAsync(
             PagingOptions pagingOptions,

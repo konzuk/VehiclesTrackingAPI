@@ -8,6 +8,8 @@ namespace VehicleTrackingAPI.Models
 {
     public class User : Resource
     {
+        public Link ListVehicles { get; set; }
+
         [Sortable]
         [SearchableString]
         public string Email { get; set; }

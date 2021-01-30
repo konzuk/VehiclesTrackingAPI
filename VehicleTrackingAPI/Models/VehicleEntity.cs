@@ -14,6 +14,7 @@ namespace VehicleTrackingAPI.Models
 
         public string Description { get; set; }
 
+        public Guid UserId { get; set; }
         public UserEntity User { get; set; }
 
         public DateTimeOffset CreatedAt { get; set; }
