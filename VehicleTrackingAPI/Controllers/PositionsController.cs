@@ -51,6 +51,15 @@ namespace VehicleTrackingAPI.Controllers
         [ResponseCache(CacheProfileName = "Static")]
         public async Task<ActionResult<Collection<Place>>> GetPlaceForPosition(Guid positionId)
         {
+            var userCheck = await _userService.GetUserAsync(User);
+            if (userCheck == null)
+            {
+                return BadRequest(new OpenIddictResponse
+                {
+                    Error = Errors.InvalidGrant,
+                    ErrorDescription = "The user does not exist."
+                });
+            }
 
             var Places = new Collection<Place>();
 

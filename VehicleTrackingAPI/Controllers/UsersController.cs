@@ -8,6 +8,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using OpenIddict.Abstractions;
+using static OpenIddict.Abstractions.OpenIddictConstants;
 
 namespace VehicleTrackingAPI.Controllers
 {
@@ -46,6 +48,16 @@ namespace VehicleTrackingAPI.Controllers
 
             pagingOptions.Offset = pagingOptions.Offset ?? _defaultPagingOptions.Offset;
             pagingOptions.Limit = pagingOptions.Limit ?? _defaultPagingOptions.Limit;
+
+            var userCheck = await _userService.GetUserAsync(User);
+            if (userCheck == null)
+            {
+                return BadRequest(new OpenIddictResponse
+                {
+                    Error = Errors.InvalidGrant,
+                    ErrorDescription = "The user does not exist."
+                });
+            }
 
             var users = new PagedResults<User>
             {
@@ -96,6 +108,15 @@ namespace VehicleTrackingAPI.Controllers
         [HttpGet("{userId}", Name = nameof(GetUserById))]
         public async Task<ActionResult<User>> GetUserById(Guid userId)
         {
+            var userCheck = await _userService.GetUserAsync(User);
+            if (userCheck == null)
+            {
+                return BadRequest(new OpenIddictResponse
+                {
+                    Error = Errors.InvalidGrant,
+                    ErrorDescription = "The user does not exist."
+                });
+            }
             var currentUserId = await _userService.GetUserIdAsync(User);
             if (currentUserId == null) return NotFound();
 
@@ -155,6 +176,16 @@ namespace VehicleTrackingAPI.Controllers
         {
             pagingOptions.Offset = pagingOptions.Offset ?? _defaultPagingOptions.Offset;
             pagingOptions.Limit = pagingOptions.Limit ?? _defaultPagingOptions.Limit;
+
+            var userCheck = await _userService.GetUserAsync(User);
+            if (userCheck == null)
+            {
+                return BadRequest(new OpenIddictResponse
+                {
+                    Error = Errors.InvalidGrant,
+                    ErrorDescription = "The user does not exist."
+                });
+            }
 
             var user = await _userService.GetUserByIdAsync(userId);
             if (user == null) return NotFound();
