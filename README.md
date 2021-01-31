@@ -11,6 +11,11 @@
 4. Swagger support http://localhost:44345/swagger
 5. **HATEOAS!!!**
 
+**Note**: The User Admin is already seed. 
+
+Username: admin@7peak.local
+Password: SuperSecret123!!
+
 ### Database
 - Entity Framework Core in-memory (No need additional Set Up)
 - Can change to Entity Framework Core SQLServer for production `Microsoft.EntityFrameworkCore.SqlServer`
