@@ -48,7 +48,7 @@
 	- `Newtonsoft.Json`
 	- `Microsoft.AspNetCore.Mvc.NewtonsoftJson`
 - **Versioning**: For API Versioning in Header
-	- `Microsoft.AspNetCore.Mvc.Versioning``
+	- `Microsoft.AspNetCore.Mvc.Versioning`
 - **RestSharp**: For Access Another API
 	- `RestSharp`
 
