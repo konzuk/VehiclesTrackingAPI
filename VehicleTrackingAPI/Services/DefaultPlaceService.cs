@@ -83,7 +83,7 @@ namespace VehicleTrackingAPI.Services
                             {
                                 CreatedAt = DateTimeOffset.UtcNow,
                                 place_id = (string)s["place_id"],
-                                types = (string)s["types"].FirstOrDefault(s=> Array.IndexOf(result_types, (string)s) >= 0),
+                                type = (string)s["types"].FirstOrDefault(s=> Array.IndexOf(result_types, (string)s) >= 0),
                                 formatted_address = (string)s["formatted_address"]
                             }).ToArray();
 

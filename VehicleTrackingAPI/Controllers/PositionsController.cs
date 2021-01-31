@@ -38,6 +38,10 @@ namespace VehicleTrackingAPI.Controllers
             _placeService = placeService;
         }
 
+
+
+        // GET /positions/{positionId}/place
+        // Assume that is route only for Admin role
         [Authorize]
         [HttpGet("{positionId}/place", Name = nameof(GetPlaceForPosition))]
         [ProducesResponseType(401)]

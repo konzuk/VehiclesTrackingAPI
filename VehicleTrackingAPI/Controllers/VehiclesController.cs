@@ -151,6 +151,7 @@ namespace VehicleTrackingAPI.Controllers
 
 
         // GET /vehicles/{vehicleId}/currentPosition
+        // Assume that is route only for Admin role
         [Authorize]
         [HttpGet("{VehicleId}/currentPosition", Name = nameof(GetCurrPositionByVehicleId))]
         [ProducesResponseType(401)]
@@ -208,6 +209,7 @@ namespace VehicleTrackingAPI.Controllers
 
 
         // GET /vehicles/{vehicleId}/listPositions
+        // Assume that is route only for Admin role
         [HttpGet("{vehicleId}/listPositions", Name = nameof(GetPositionsForVehicle))]
         [ProducesResponseType(401)]
         [ProducesResponseType(404)]

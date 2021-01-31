@@ -141,6 +141,7 @@ namespace VehicleTrackingAPI.Controllers
 
 
         // GET /vehicles/{userId}/listVehicles
+        // Assume that is route only for Admin role
         [Authorize]
         [HttpGet("{userId}/listVehicles", Name = nameof(GetVehiclesForUser))]
         [ProducesResponseType(401)]
@@ -177,11 +178,18 @@ namespace VehicleTrackingAPI.Controllers
             if (Vehicles == null) return NotFound();
 
             var collectionLink = Link.To(nameof(GetVehiclesForUser));
-            var collection = PagedCollection<Vehicle>.Create<PagedCollection<Vehicle>>(
+            var collection = PagedCollection<Vehicle>.Create<VehiclesResponse>(
                 collectionLink,
                 Vehicles.Items.ToArray(),
                 Vehicles.TotalSize,
                 pagingOptions);
+
+            collection.VehicleQuery = FormMetadata.FromResource<Vehicle>(
+                Link.ToForm(
+                    nameof(GetVehiclesForUser),
+                    null,
+                    Link.GetMethod, null,
+                    Form.QueryRelation));
 
             return Ok(collection);
         }

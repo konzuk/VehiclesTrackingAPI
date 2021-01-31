@@ -13,7 +13,7 @@ namespace VehicleTrackingAPI.Models
         [SearchableDateTime]
         public DateTimeOffset CreatedAt { get; set; }
         public string place_id { get; set; }
-        public string types { get; set; }
+        public string type { get; set; }
         public string formatted_address { get; set; }
 
     }
