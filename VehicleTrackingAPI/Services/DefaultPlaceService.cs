@@ -97,20 +97,21 @@ namespace VehicleTrackingAPI.Services
                             return null;
                         case "OVER_QUERY_LIMIT":
                             //indicates that you are over your quota. 
-                            return null;
+                            throw new InvalidOperationException("Google API Error: OVER_QUERY_LIMIT");
                         case "REQUEST_DENIED":
                             //indicates that the request was denied. 
                             //Possibly because the request includes a result_type` or location_type` 
                             //parameter but does not include an API key or client ID.
-                            return null;
+                            throw new InvalidOperationException("Google API Error: REQUEST_DENIED");
                         case "INVALID_REQUEST":
                             //generally indicates one of the following:
                             //The query (address, components or latlng) is missing.
                             //An invalid result_type or location_type was given.
-                            return null;
+                            throw new InvalidOperationException("Google API Error: INVALID_REQUEST");
                         case "UNKNOWN_ERROR":
-                        //indicates that the request could not be processed due to a server error. 
-                        //The request may succeed if you try again.
+                            //indicates that the request could not be processed due to a server error. 
+                            //The request may succeed if you try again.
+                            throw new InvalidOperationException("Google API Error: UNKNOWN_ERROR");
                         default:
                             return null;
                     }

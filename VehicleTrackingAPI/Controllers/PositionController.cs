@@ -61,6 +61,7 @@ namespace VehicleTrackingAPI.Controllers
                 if (canSeeEveryone.Succeeded)
                 {
                     Places = await _placeService.GetPlaceForPositionAsync(positionId);
+                    if (Places == null) return NotFound();
                 }
                 else
                 {
