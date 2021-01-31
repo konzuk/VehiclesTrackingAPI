@@ -8,6 +8,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using VehicleTrackingAPI.Infrastructure;
+using OpenIddict.Abstractions;
+using static OpenIddict.Abstractions.OpenIddictConstants;
 
 namespace VehicleTrackingAPI.Controllers
 {
@@ -44,6 +46,15 @@ namespace VehicleTrackingAPI.Controllers
         [ProducesResponseType(201)]
         public async Task<ActionResult> CreateVehicle([FromBody] VehicleRegisterForm form)
         {
+            var userCheck = await _userService.GetUserAsync(User);
+            if (userCheck == null)
+            {
+                return BadRequest(new OpenIddictResponse
+                {
+                    Error = Errors.InvalidToken,
+                    ErrorDescription = "The user does not exist."
+                });
+            }
             var userId = await _userService.GetUserIdAsync(User);
             if (userId == null) return Unauthorized();
 
@@ -62,13 +73,24 @@ namespace VehicleTrackingAPI.Controllers
         [HttpGet(Name = nameof(GetVisibleVehicles))]
         [ProducesResponseType(401)]
         [ProducesResponseType(200)]
-        public async Task<PagedCollection<Vehicle>> GetVisibleVehicles(
+        public async Task<ActionResult<PagedCollection<Vehicle>>> GetVisibleVehicles(
             [FromQuery] PagingOptions pagingOptions,
             [FromQuery] SortOptions<Vehicle, VehicleEntity> sortOptions,
             [FromQuery] SearchOptions<Vehicle, VehicleEntity> searchOptions)
         {
             pagingOptions.Offset = pagingOptions.Offset ?? _defaultPagingOptions.Offset;
             pagingOptions.Limit = pagingOptions.Limit ?? _defaultPagingOptions.Limit;
+
+
+            var userCheck = await _userService.GetUserAsync(User);
+            if (userCheck == null)
+            {
+                return BadRequest(new OpenIddictResponse
+                {
+                    Error = Errors.InvalidToken,
+                    ErrorDescription = "The user does not exist."
+                });
+            }
 
             var Vehicles = new PagedResults<Vehicle>();
 
@@ -125,6 +147,17 @@ namespace VehicleTrackingAPI.Controllers
         [ProducesResponseType(200)]
         public async Task<ActionResult<Vehicle>> GetVehicleById(Guid vehicleId)
         {
+
+            var userCheck = await _userService.GetUserAsync(User);
+            if (userCheck == null)
+            {
+                return BadRequest(new OpenIddictResponse
+                {
+                    Error = Errors.InvalidToken,
+                    ErrorDescription = "The user does not exist."
+                });
+            }
+
             var userId = await _userService.GetUserIdAsync(User);
             if (userId == null) return Unauthorized();
             
@@ -159,6 +192,15 @@ namespace VehicleTrackingAPI.Controllers
         [ProducesResponseType(200)]
         public async Task<ActionResult<Position>> GetCurrPositionByVehicleId(Guid vehicleId)
         {
+            var userCheck = await _userService.GetUserAsync(User);
+            if (userCheck == null)
+            {
+                return BadRequest(new OpenIddictResponse
+                {
+                    Error = Errors.InvalidToken,
+                    ErrorDescription = "The user does not exist."
+                });
+            }
             var userId = await _userService.GetUserIdAsync(User);
             if (userId == null) return Unauthorized();
 
@@ -195,6 +237,16 @@ namespace VehicleTrackingAPI.Controllers
         public async Task<ActionResult> CreatePositionForVehicle(
             Guid vehicleId, [FromBody] PositionRegisterForm form)
         {
+            var userCheck = await _userService.GetUserAsync(User);
+            if (userCheck == null)
+            {
+                return BadRequest(new OpenIddictResponse
+                {
+                    Error = Errors.InvalidToken,
+                    ErrorDescription = "The user does not exist."
+                });
+            }
+
             var userId = await _userService.GetUserIdAsync(User);
             if (userId == null) return Unauthorized();
 
@@ -210,6 +262,7 @@ namespace VehicleTrackingAPI.Controllers
 
         // GET /vehicles/{vehicleId}/listPositions
         // Assume that is route only for Admin role
+        [Authorize]
         [HttpGet("{vehicleId}/listPositions", Name = nameof(GetPositionsForVehicle))]
         [ProducesResponseType(401)]
         [ProducesResponseType(404)]
@@ -222,6 +275,16 @@ namespace VehicleTrackingAPI.Controllers
         {
             pagingOptions.Offset = pagingOptions.Offset ?? _defaultPagingOptions.Offset;
             pagingOptions.Limit = pagingOptions.Limit ?? _defaultPagingOptions.Limit;
+
+            var userCheck = await _userService.GetUserAsync(User);
+            if (userCheck == null)
+            {
+                return BadRequest(new OpenIddictResponse
+                {
+                    Error = Errors.InvalidToken,
+                    ErrorDescription = "The user does not exist."
+                });
+            }
 
             var userId = await _userService.GetUserIdAsync(User);
             if (userId == null) return NotFound();

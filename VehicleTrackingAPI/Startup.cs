@@ -55,11 +55,10 @@ namespace VehicleTrackingAPI
                     // Use in-memory database for quick dev and testing
                     // TODO: Swap out for a real database in production
 
-                    //options.UseInMemoryDatabase("7peakdb");
+                    options.UseInMemoryDatabase("7peakdb");
 
                     ////Change to SQLServer Code
-                    options.UseSqlServer(Configuration.GetConnectionString("7peakdbContext"), 
-                        op => op.UseNetTopologySuite());
+                    //options.UseSqlServer(Configuration.GetConnectionString("7peakdbContext"), op => op.UseNetTopologySuite());
 
 
                     options.UseOpenIddict<Guid>();
