@@ -13,8 +13,8 @@
 
 **Note**: The User Admin is already seed. 
 
-Username: admin@7peak.local
-Password: SuperSecret123!!
+- Username: admin@7peak.local
+- Password: SuperSecret123!!
 
 ### Database
 - Entity Framework Core in-memory (No need additional Set Up)
