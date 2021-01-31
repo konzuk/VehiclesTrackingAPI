@@ -17,7 +17,6 @@
 	- Update connection string in `appsettings.json`
 	- `add-migration InitDatabase` Create class for migration to database
 	- `update-database`Apply change to database.
-- Can also change to Entity Framework Core Cosmos DB for production `Microsoft.EntityFrameworkCore.Cosmos`
 
 
 ### Dependencies
@@ -61,3 +60,36 @@
 ### Authorization 
 - Resource Owner Password Credentials flow
 - Token: **Bearer**
+
+
+### Bonus
+Google Map API Get Place.
+- Configurations: 
+	- Update your google key in `appsettings.json` value `"GoogleAPIKey": "xxxxxxxxxxxxxxxxxxxxxxxxxxxx",`
+	- Currently we get result type **locality** and **street_address** you can modify this type in `appsettings.json` value `"GoogleAPIResultType": "locality|street_address",` list each type separate with `|`
+	- Currently I use server cache to reduce number of API call. `[ResponseCache(CacheProfileName = "Static")]`
+	- TODO:             
+			1. After call Google API, store result in Database.
+			2. Before call Google API, check if data already have in Database, use data in Database instead.
+			3. Create and a new method to refresh Place Data
+                       (Remove Place in Database and call Google API for to generate new place)
+- If the the API Key is correct the result of  `latitude: 13.721601174184647, longitude: 100.55825338870659` will be
+```json
+{
+    "value": [
+        {
+            "createdAt": "2021-01-31T03:06:17.2931643+00:00",
+            "place_id": "ChIJFx4urxCf4jARPJagAAXSVhM",
+            "types": "street_address",
+            "formatted_address": "492/34 Rama IV Rd, Khwaeng Khlong Toei, Khet Khlong Toei, Krung Thep Maha Nakhon 10110, Thailand"
+        },
+        {
+            "createdAt": "2021-01-31T03:06:17.2949262+00:00",
+            "place_id": "ChIJ82ENKDJgHTERIEjiXbIAAQE",
+            "types": "locality",
+            "formatted_address": "Bangkok, Thailand"
+        }
+    ]
+}
+```
+
