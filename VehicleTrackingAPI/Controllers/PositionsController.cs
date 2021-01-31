@@ -56,7 +56,7 @@ namespace VehicleTrackingAPI.Controllers
             {
                 return BadRequest(new OpenIddictResponse
                 {
-                    Error = Errors.InvalidGrant,
+                    Error = Errors.InvalidToken,
                     ErrorDescription = "The user does not exist."
                 });
             }
