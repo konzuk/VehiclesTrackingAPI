@@ -18,7 +18,9 @@
 
 ### Database
 - Entity Framework Core in-memory (No need additional Set Up)
+	- In `Startup.cs` use this code `options.UseInMemoryDatabase("7peakdb");`
 - Can change to Entity Framework Core SQLServer for production `Microsoft.EntityFrameworkCore.SqlServer`
+	- In `Startup.cs` use this code `options.UseSqlServer(Configuration.GetConnectionString("7peakdbContext"), op => op.UseNetTopologySuite());`
 	- Update connection string in `appsettings.json`
 	- `add-migration InitDatabase` Create class for migration to database
 	- `update-database`Apply change to database.
