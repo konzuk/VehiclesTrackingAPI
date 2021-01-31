@@ -78,15 +78,15 @@ Google Map API Get Place.
 {
     "value": [
         {
-            "createdAt": "2021-01-31T03:06:17.2931643+00:00",
+            "createdAt": "2021-01-31T03:14:22.9415634+00:00",
             "place_id": "ChIJFx4urxCf4jARPJagAAXSVhM",
-            "types": "street_address",
+            "type": "street_address",
             "formatted_address": "492/34 Rama IV Rd, Khwaeng Khlong Toei, Khet Khlong Toei, Krung Thep Maha Nakhon 10110, Thailand"
         },
         {
-            "createdAt": "2021-01-31T03:06:17.2949262+00:00",
+            "createdAt": "2021-01-31T03:14:22.9437902+00:00",
             "place_id": "ChIJ82ENKDJgHTERIEjiXbIAAQE",
-            "types": "locality",
+            "type": "locality",
             "formatted_address": "Bangkok, Thailand"
         }
     ]
